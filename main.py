@@ -19,14 +19,19 @@ class PdfReport:
     def __init__(self,filename):
         self.filename = filename
 
-    def generate(self):
+    def generate(self,flatmate1,flatmate2,bill):
         pdf = FPDF(orientation='P',unit='pt', format='A4')
         pdf.set_font(family='Times', size=24, style="B")
         pdf.add_page()
         pdf.cell(w=0, h= 88 , txt="Flatmates Bill", border=0, align="C", ln=1)
         pdf.cell(w=100, h= 88 , txt="Period", border=0, align="C")
-        pdf.cell(w=150, h= 88 , txt="March 2021", border=0, align="C")
-        pdf.output("bill.pdf")
+        pdf.cell(w=150, h= 88 , txt=bill.period, border=0, align="C", ln=1)
+
+
+        pdf.cell(w=100, h= 40 , txt=flatmate1.name, border=0, align="C")
+        pdf.cell(w=150, h= 40 , txt=str(round(flatmate1.pays(bill,flatmate2))), border=0, align="C")
+
+        pdf.output(self.filename)
 the_bill = Bill(amount = 120, period="March 2021")
 john = Flatmate(name="John",days_in_house=20)
 marry = Flatmate(name="Marry", days_in_house=25)
@@ -34,5 +39,5 @@ marry = Flatmate(name="Marry", days_in_house=25)
 print("John pays: ", john.pays(the_bill,marry))
 print("Marry pays: ", marry.pays(the_bill,john))
 
-pdf_report = PdfReport("hi")
-pdf_report.generate()
+pdf_report = PdfReport("hi.pdf")
+pdf_report.generate(john,marry,the_bill)
