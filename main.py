@@ -1,10 +1,29 @@
 from flask.views import MethodView
 from wtforms import Form, StringField, SubmitField
-from flask import Flask
+from flask import Flask, jsonify
 from flask import Flask, render_template, request
+from pymongo import MongoClient
+from flat_mate import database
 from flat_mate import flat
 
+
+CONNECTION = 'mongodb://localhost:27017/'
 app = Flask(__name__)
+db = database.Database(CONNECTION,'flatmate_db') 
+
+
+@app.route('/users', methods=['GET'])
+def get_users():
+    users = db.get_users()
+    user_list = []
+    for user in users:
+        print("xx")
+        user_list.append({
+            'username': user['username'],
+            'email': user['email']
+            # Add other fields as needed
+        })
+    return jsonify({'users': user_list})
 
 class HomePage(MethodView):
     def get(self):

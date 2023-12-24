@@ -1,0 +1,11 @@
+class User:
+    username = ""
+    email = ""
+    password_hash = ""
+    salt = ""
+    first_name = ""
+    last_name= ""
+    date_registered = ""
+    last_login = ""
+    account_status = ""
+    role = ""
