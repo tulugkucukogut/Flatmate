@@ -2,14 +2,15 @@ from flask.views import MethodView
 from wtforms import Form, StringField, SubmitField
 from flask import Flask, jsonify
 from flask import Flask, render_template, request
-from pymongo import MongoClient
 from flat_mate import database
 from flat_mate import flat
+from login import LoginPage
 
 
 CONNECTION = 'mongodb://localhost:27017/'
 app = Flask(__name__)
-db = database.Database(CONNECTION,'flatmate_db') 
+db = database.Database(CONNECTION,'flatmate_db')
+
 
 
 @app.route('/users', methods=['GET'])
@@ -28,6 +29,7 @@ def get_users():
 class HomePage(MethodView):
     def get(self):
         return render_template('index.html')
+
 
 class BillFormPage(MethodView):
     def get(self):
@@ -66,7 +68,8 @@ class BillForm(Form):
 
     submit = SubmitField("Calculate")
 
-app.add_url_rule("/", view_func= HomePage.as_view('home_page'))
+app.add_url_rule("/", view_func= LoginPage.as_view('login_page'))
+app.add_url_rule("/home", view_func= HomePage.as_view('home_page'))
 app.add_url_rule("/bill_form_page", view_func= BillFormPage.as_view('bill_form_page'))
 #app.add_url_rule("/results", view_func= ResultsPage.as_view('results_page'))
 

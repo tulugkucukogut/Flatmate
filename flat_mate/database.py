@@ -4,7 +4,12 @@ class Database:
         self.connection = MongoClient(connection)
         self.db = self.connection[db_name]
         self.users = self.db.users
+        print("XXXX")
+        print(self.db.test_database)
     
     def get_users(self):
         return self.users.find()
+
+    def insert_user():
+        pass
     
