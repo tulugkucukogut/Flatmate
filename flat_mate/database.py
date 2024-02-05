@@ -1,15 +1,12 @@
 from pymongo import MongoClient
 class Database:
-    def __init__(self,connection,db_name):
+    def __init__(self,connection):
         self.connection = MongoClient(connection)
-        self.db = self.connection[db_name]
-        self.users = self.db.users
-        print("XXXX")
-        print(self.db.test_database)
     
-    def get_users(self):
-        return self.users.find()
+    def create_database(self,db_name):
+        self.db = self.connection[db_name]
 
-    def insert_user():
-        pass
+    def get_users_collection(self):
+        return self.db["users"]
+
     
