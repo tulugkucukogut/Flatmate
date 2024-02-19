@@ -1,4 +1,4 @@
-from flat_mate import database
+from flat_mate.database import Database
 class User:
     username = ""
     email = "" # it is used for id
@@ -10,13 +10,20 @@ class User:
     last_login = ""
     account_status = ""
     role = ""
-    photo = ""
+    db_instance = ""
 
     def __init__(self,email):
+        CONNECTION = 'mongodb://localhost:27017/'
+        self.db_instance = Database(CONNECTION)
+        self.db_instance.create_database('flatmate_db')
         self.email = email
+    
+
     def insert_user(self,users_collection):
-        user = {"username" : 1,
+        user_collection = self.db_instance.get_collection_by_name(users_collection)
+        user_data = {"username" : 1,
                 "email": 2,
                 "password_hash" : 3
         }
-        result = users_collection.insert_one()
+        inserted_id = user_collection.insert_one(user_data).inserted_id
+        return inserted_id

@@ -10,7 +10,7 @@ class LoginPage(MethodView):
         print(username)
         password = request.form.get("password")
         user_instance = user.User("dnm")
-        inserted_id = user_instance.insert_user()
+        inserted_id = user_instance.insert_user("users")
 
     
 

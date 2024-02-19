@@ -13,7 +13,7 @@ app = Flask(__name__)
 db = database.Database(CONNECTION)
 db.create_database('flatmate_db')
 users = db.get_users_collection()
-
+print(users)
 
 
 class HomePage(MethodView):
@@ -64,4 +64,4 @@ app.add_url_rule("/home", view_func= HomePage.as_view('home_page'))
 app.add_url_rule("/bill_form_page", view_func= BillFormPage.as_view('bill_form_page'))
 #app.add_url_rule("/results", view_func= ResultsPage.as_view('results_page'))
 
-app.run(debug=True)
+app.run()
