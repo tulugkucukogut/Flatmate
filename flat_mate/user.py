@@ -27,3 +27,10 @@ class User:
         }
         inserted_id = user_collection.insert_one(user_data).inserted_id
         return inserted_id
+    
+    def user_existance(self,username):
+
+    
+
+    def get_user_by_id(self,username):
+        pass
