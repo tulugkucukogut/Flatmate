@@ -1,5 +1,6 @@
 from flat_mate.database import Database
-class User:
+from flask_login import UserMixin
+class User(UserMixin):
     username = ""
     email = "" # it is used for id
     password_hash = ""
@@ -13,10 +14,11 @@ class User:
     db_instance = ""
 
     def __init__(self,email):
+        self.email = email
         CONNECTION = 'mongodb://localhost:27017/'
         self.db_instance = Database(CONNECTION)
         self.db_instance.create_database('flatmate_db')
-        self.email = email
+        self.collection = self.db_instance.get_users_collection()
     
 
     def insert_user(self,users_collection):
@@ -28,9 +30,17 @@ class User:
         inserted_id = user_collection.insert_one(user_data).inserted_id
         return inserted_id
     
-    def user_existance(self,username):
+    def user_existance(self):
+        user = self.collection.find_one({'email' : self.email})
+        return user is not None
+
+    def get_by_email(self,value):
+        user = self.collection.find_one({'email' : self.email})
+        return user if user else None
+    @staticmethod
+    def get(email):
+        return User(email)
 
     
 
-    def get_user_by_id(self,username):
-        pass
+    

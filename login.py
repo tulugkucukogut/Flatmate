@@ -3,37 +3,25 @@ from flask.views import MethodView
 from flat_mate import user
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login'
-
-
-#you should take the query with user id
-@login_manager.user_loader
-def load_user(user_id):
-    return user.query.get(int(user_id))
-
-class LoginPage(MethodView):
-    def get(self):
-        return render_template('login_page.html')
-    
-    def post(self):
-        username = request.form.get("user_name")
-        print(username)
-        password = request.form.get("password")
-        user_instance = user.User("dnm")
-        inserted_id = user_instance.insert_user("users")
-
-    
 
 
 class Login():
-    user_name = ""
+    email = ""
     password = ""
-    def __init__(self, username, password):
-        self.user_name = username
+    def __init__(self, email, password):
+        self.email = email
         self.password = password
     
-    def validate_user(self, username):
-        pass
+    def validate_on_submit(self):
+        login_user = user.User(self.email).user_existance() # it should be checked with hash
+        if login_user and self.password == self.check_password():
+            return True
+        return False
+    
+    def check_password(self):
+        user_data = user.User(self.email).get_by_email(self.email)
+        if user_data:
+            return user_data.get('password_hash',None)
+        else: 
+            return None
         
