@@ -101,3 +101,8 @@ body{
 .register-link p a:hover{
     text-decoration: underline;
 }
+
+.body_signup{
+    background-color: aliceblue;
+
+}

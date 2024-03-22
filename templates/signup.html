@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin:0;
+        }
+        .signup_form{
+            width: 60%;
+        }
+        h1{
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body class="body_signup">
+    <script src="js/bootstrap.js"></script>
+
+    <div class="signup_form">
+        <form action="">
+            <h1>Sign Up</h1>
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="signup_email" placeholder="Email">
+                <label for="signup_email">Email</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="signup_password" placeholder="password">
+                <label for="signup_password">Password</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="signup_confirm_password" placeholder="confirmpassword">
+                <label for="signup_confirm_password">Confirm Password</label>
+            </div>
+            <Button>Create User</Button>
+        </form>
+    </div>
+        
+    
+    
+</body>
+</html>
