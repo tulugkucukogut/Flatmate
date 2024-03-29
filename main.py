@@ -5,14 +5,22 @@ from flat_mate import database
 from flat_mate import user
 from flat_mate import flat
 from login import Login
+from flask_wtf.csrf import CSRFProtect
+import os
+from flask_wtf.csrf import CSRFProtect
 from flask_login import UserMixin, LoginManager, login_required
 
 
 CONNECTION = 'mongodb://localhost:27017/'
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Add a secret key for session management
+CSRFProtect(app)
+#bcrypt = Bcrypt(app)
+app.secret_key = os.urandom(32)  # Add a secret key for session management
+csrf = CSRFProtect(app)
+csrf.init_app(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
+
 login_manager.login_view = 'login'
 
 db = database.Database(CONNECTION)
@@ -35,7 +43,13 @@ class LoginPage(MethodView):
             return render_template('index.html')
         return render_template('login_page.html')
 
-
+class SignUpPage(MethodView):
+    def get(self):
+        return render_template('signup.html')
+    
+    def post(self):
+        pass
+    
 @login_manager.user_loader
 def load_user(email):
     return user.User.get(email)
@@ -79,4 +93,6 @@ class BillForm(Form):
 app.add_url_rule("/login", view_func=LoginPage.as_view('login_page'))
 app.add_url_rule("/home", view_func=Home.as_view('home'))
 app.add_url_rule("/bill_form_page", view_func=BillFormPage.as_view('bill_form_page'))
+app.add_url_rule("/register", view_func=SignUpPage.as_view('signup'))
+
 app.run(debug=True)
