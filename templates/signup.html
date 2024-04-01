@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">
+
     <style>
         body{
             display: flex;
@@ -23,17 +24,19 @@
 
 </head>
 <body class="body_signup">
-    <script src="js/bootstrap.js"></script>
+    <script src="static/js/bootstrap.js"></script>
 
     <div class="signup_form">
-        <form action="">
+        <form action="register" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
             <h1>Sign Up</h1>
             <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="signup_email" placeholder="Email">
+                <input type="email" class="form-control" id="signup_email" placeholder="Email" required>
                 <label for="signup_email">Email</label>
             </div>
             <div class="form-floating mb-3">
-                <input type="password" class="form-control" id="signup_password" placeholder="password">
+                <input type="password" class="form-control" id="signup_password" placeholder="password" re>
                 <label for="signup_password">Password</label>
             </div>
             <div class="form-floating mb-3">

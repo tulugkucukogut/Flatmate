@@ -5,6 +5,7 @@ from flat_mate import database
 from flat_mate import user
 from flat_mate import flat
 from login import Login
+from signup import Signup
 from flask_wtf.csrf import CSRFProtect
 import os
 from flask_wtf.csrf import CSRFProtect
@@ -12,7 +13,7 @@ from flask_login import UserMixin, LoginManager, login_required
 
 
 CONNECTION = 'mongodb://localhost:27017/'
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static', static_folder='static')
 CSRFProtect(app)
 #bcrypt = Bcrypt(app)
 app.secret_key = os.urandom(32)  # Add a secret key for session management
@@ -48,8 +49,11 @@ class SignUpPage(MethodView):
         return render_template('signup.html')
     
     def post(self):
-        pass
-    
+        print("AA")
+        email = request.form.get("signup_email")
+        password = request.form.get("signup_password")
+        confirm_password = request.form.get("signup_confirm_password")
+        signup_creation = Signup(email,password,confirm_password)
 @login_manager.user_loader
 def load_user(email):
     return user.User.get(email)
