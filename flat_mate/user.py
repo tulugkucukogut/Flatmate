@@ -21,8 +21,8 @@ class User(UserMixin):
         self.collection = self.db_instance.get_users_collection()
     
 
-    def insert_user(self,users_collection):
-        user_collection = self.db_instance.get_collection_by_name(users_collection)
+    def insert_user(self,user_collection):
+        #user_collection = self.db_instance.get_collection_by_name(users_collection)
         user_data = {"username" : 1,
                 "email": 2,
                 "password_hash" : 3

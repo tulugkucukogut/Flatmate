@@ -54,6 +54,13 @@ class SignUpPage(MethodView):
         password = request.form.get("signup_password")
         confirm_password = request.form.get("signup_confirm_password")
         signup_creation = Signup(email,password,confirm_password)
+
+        if signup_creation.validate_user(users):
+            signup_creation.create_user(users)
+            #enter the login part
+
+        return render_template('login_page.html')
+
 @login_manager.user_loader
 def load_user(email):
     return user.User.get(email)
