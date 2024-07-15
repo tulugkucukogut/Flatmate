@@ -1,17 +1,20 @@
 from flat_mate import user
 from email_validator import validate_email, EmailNotValidError
+import bcrypt
 
 class Signup():
     email =""
     password =""
     confirm_password = ""
     def __init__(self, email, password, confirm_password):
+        print("XXXX")
         self.email = email
         self.password = password
+        print(self.password)
         self.confirm_password = confirm_password
     
     def check_password_mismatch(self):
-        if self.email != self.confirm_password:
+        if self.password != self.confirm_password:
             return True
         return False
     
@@ -30,6 +33,7 @@ class Signup():
 
     def create_user(self,collection):
         new_user = user.User(self.email)
+        new_user.password_hash = self.hash_password_bcrypt()
         new_user.insert_user(collection)
         
 
@@ -48,6 +52,16 @@ class Signup():
             return False
         return True
         #buraya inputların düzgün girilip girilmiceğini belli etmemiz gerek
+
+    def hash_password_bcrypt(self):
+        # Password'u UTF-8'e encode et
+        print("password")
+        print(self.password)
+        password_bytes = self.password.encode('utf-8')
+        # Salt oluşturarak hash'i oluştur
+        hashed = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
+        # Hash'i döndür
+        return hashed
         
 
 
